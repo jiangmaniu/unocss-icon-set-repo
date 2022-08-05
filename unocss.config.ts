@@ -8,6 +8,17 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
+import { icons as antdIcons } from '@iconify-json/ant-design'
+import { icons as riIcons } from '@iconify-json/ri'
+
+const getSafelist = () => {
+  const base = 'prose prose-sm m-auto text-left'.split(' ')
+
+  const riIconNames = Object.keys(riIcons.icons).map(iconName => `i-${riIcons.prefix}:${iconName}`)
+  const antdIconNames = Object.keys(antdIcons.icons).map(iconName => `i-${antdIcons.prefix}:${iconName}`)
+
+  return [...riIconNames, ...antdIconNames, ...base]
+}
 
 export default defineConfig({
   shortcuts: [
@@ -18,6 +29,8 @@ export default defineConfig({
     presetUno(),
     presetAttributify(),
     presetIcons({
+      // Can't seem to request
+      // cdn: 'https://esm.sh/',
       scale: 1.2,
       warn: true,
     }),
@@ -34,5 +47,5 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  safelist: 'prose prose-sm m-auto text-left'.split(' '),
+  safelist: getSafelist(),
 })
